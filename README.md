@@ -1,6 +1,7 @@
 # QW.Paginator
 # 基于Jquery(>=1.7)的分页显示组件
 # [戴子意 DZY](http://www.daiziyi.com/)
+# Note:参考了网上的分页组件但不记得原作者，在此表示感谢，下次找到再加上对方的版权说明
 # 感谢我的妻子前前，还有调皮的儿子琮琮和璋璋
 
 # Usage
@@ -43,14 +44,14 @@ $("#box").QWPaginator({
 | pageSize| 每页条数 |  | - | - |
 | totalPages| 总页数 |  | - | - |
 | totalCounts| 总条数 |  | - | - |
-| currentPage| 当前页 |  | - | - |
-| visiblePages| 可见页数量 |  | - | - |
-| disableClass| 禁用样式 |  | - | - |
-| activeClass| 活动样式 |  | - | - |
+| currentPage| 当前页 | 1 | - | - |
+| visiblePages| 可见页数量 | 7 | - | - |
+| disableClass| 禁用样式 | disabled | - | - |
+| activeClass| 活动样式 | page-cur | - | - |
 | pageinfo| 页信息 |  | - |  | 
 | showInputPage| 是否显示页跳转 | true | - | 为false适用于下拉加载 |
 | external| 外部参数 |  | - | 组件本身不使用此参数 |
-| onPageChange| 页跳转回调 |  | function (pageIndex, type) {} | 回调参数中type值init表示初始,go表示变换 |
+| onPageChange| 页跳转回调 |  | function (p, t) {} | 回调参数中t值init表示初始,go表示变换 |
 
 # Method
 * **option**
