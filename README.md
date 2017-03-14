@@ -1,2 +1,85 @@
 # QW.Paginator
-Generic pagination module
+# 基于Jquery(>=1.7)的分页显示组件
+# [戴子意 DZY](http://www.daiziyi.com/)
+# 感谢我的妻子前前，还有调皮的儿子琮琮和璋璋
+
+# Usage
+* **writing**
+```javascript
+$("选择器").QWPaginator({参数});
+```
+* **examples**
+```javascript
+$("#box").QWPaginator({
+        totalCounts: 500,
+        pageSize: 10,
+        currentPage: 1,
+        prev: '',
+        next: '',
+        page: '<li><a href="javascript:;">{{page}}</a></li>',
+		pageinfo:'<span class="qw-pageinfo">第{{page}}/{{totalPages}}页 共{{totalCounts}}记录</span>',
+        disableClass: 'disabled',
+        activeClass: 'active',
+        onPageChange: function (pageindex, type) {
+
+        }
+    });
+```
+	
+# Property
+| 名称 | 说明  | 提示 |
+| ------------ | ------------ | ------------ |
+| container| 容器 |  |
+| options| 参数 | 见下表 |
+
+# Parameter
+| 名称 | 说明  | 默认值  | 示例  | 提示 |
+| ------------ | ------------ | ------------ | ------------ | ------------ |
+| first| 第一页 |  | - | 不使用请用空字符 |
+| prev| 上一页 |  | - | 不使用请用空字符 |
+| next| 下一页 |  | - | 不使用请用空字符 |
+| last| 末页 |  | - | 不使用请用空字符 |
+| page| 每页模板 |  | - | 不使用请用空字符 |
+| pageSize| 每页条数 |  | - | - |
+| totalPages| 总页数 |  | - | - |
+| totalCounts| 总条数 |  | - | - |
+| currentPage| 当前页 |  | - | - |
+| visiblePages| 可见页数量 |  | - | - |
+| disableClass| 禁用样式 |  | - | - |
+| activeClass| 活动样式 |  | - | - |
+| pageinfo| 页信息 |  | - |  | 
+| showInputPage| 是否显示页跳转 | true | - | 为false适用于下拉加载 |
+| external| 外部参数 |  | - | 组件本身不使用此参数 |
+| onPageChange| 页跳转回调 |  | function (pageIndex, type) {} | 回调参数中type值init表示初始,go表示变换 |
+
+# Method
+* **option**
+设置获取选项
+```javascript
+var opts=databox.QWPaginator("option", { });
+```
+* **redraw**
+重绘分页
+```javascript
+databox.QWPaginator("redraw", { });
+```
+* **loading**
+显示加载提示
+```javascript
+databox.QWPaginator("loading");
+```
+* **loaded**
+隐藏加载提示
+```javascript
+databox.QWPaginator("loaded");
+```
+* **destroy**
+释放实例
+```javascript
+databox.QWPaginator("destroy");
+```
+* **external**
+设置获取外部参数
+```javascript
+var exdata=databox.QWPaginator("external");
+```
