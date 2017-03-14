@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>QW.Paginator Demo By Dzy</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+	<!--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>-->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="scripts/jquery-1.7.2.min.js"></script>
+	<script src="../QW.Paginator.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <ul class="pagination" id="showpager"></ul>
+				<select id="pgsize" class="form-control">
+				<option value="10">10</option>
+				<option value="20">20</option>
+				<option value="50">50</option>
+				</select>
+				<div style="height:20px;"></div>
+                <button type="button" id="bt-opera1" class="btn btn-warning btn-block">跳第三页</button>
+                <button type="button" id="bt-opera2" class="btn btn-warning btn-block">刷新(每页15条)</button>
+            </div>
+            <div class="col-md-5">
+                <ul class="pagination" id="showpager2"></ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    var showpage = $("#showpager");
+    var showpager2 = $("#showpager2");
+	var curpagesize=parseInt($("#pgsize").val());
+	showpage.QWPaginator({
+        totalCounts: 100,
+        pageSize: curpagesize,
+        currentPage: 1,
+        first: '',
+        page: '',
+        last: '',
+		pageinfo:'<span class="qw-pageinfo">第{{page}}/{{totalPages}}页 共{{totalCounts}}记录</span>',
+		showInputPage:true,
+        visiblePages: 5,
+        disableClass: 'disabled',
+        activeClass: 'active',
+        onPageChange: function (pageindex, type) {
+
+        }
+    });
+	showpager2.QWPaginator({
+        totalCounts: 500,
+        pageSize: 10,
+        currentPage: 1,
+        first: '<li><a href="javascript:;" class="page-first">First</a></li>',
+        prev: '<li><a href="javascript:;" class="page-prev">&laquo;</a></li>',
+        next: '<li><a href="javascript:;" class="page-next">&raquo;</a></li>',
+        page: '<li><a href="javascript:;">{{page}}</a></li>',
+        last: '<li><a href="javascript:;" class="page-last">Last</a></li>',
+        visiblePages: 6,
+		showInputPage:false,
+        disableClass: 'disabled',
+        activeClass: 'active',
+        onPageChange: function (pageindex, type) {
+
+        }
+    });
+	
+    $("#pgsize").on("change", function () {
+        var _t = $(this);
+        curpagesize = parseInt(_t.val());
+        showpage.QWPaginator("redraw", { pageSize: curpagesize });
+    });
+	
+	$("#bt-opera1").on("click",function(){
+		showpage.QWPaginator("redraw",{ currentPage: 3 });
+	});
+	
+	$("#bt-opera2").on("click",function(){
+		showpage.QWPaginator("redraw",{ pageSize: 15 });
+	});
+</script>
