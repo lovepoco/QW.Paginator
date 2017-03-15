@@ -47,15 +47,17 @@
             if (!self.isNumber(opts.visiblePages)) {
                 opts.visiblePages = $.QWPaginator.defaultOptions.visiblePages;
             }
-            if (!opts.totalPages && !opts.totalCounts) {
-                throw new Error('[QWPaginator] totalCounts or totalPages is required');
+            if (!opts.totalPages) {
+                throw new Error('[QWPaginator] totalPages is required');
             }
             if (!opts.totalPages && !opts.pageSize && opts.totalCounts) {
                 opts.pageSize = $.QWPaginator.defaultOptions.pageSize;
             }
             if (opts.totalCounts && opts.pageSize) {
                 opts.totalPages = Math.ceil(opts.totalCounts / opts.pageSize);
-            }
+            }else{
+				opts.totalPages = $.QWPaginator.defaultOptions.totalPages;
+			}
             if (opts.currentPage < 1) {
                 throw new Error('[QWPaginator] currentPage is incorrect');
             }
@@ -90,8 +92,11 @@
 					.replace(/{{page}}/g, pageData)
 					.replace(/{{totalPages}}/g, self.options.totalPages)
 					.replace(/{{totalCounts}}/g, self.options.totalCounts);
-				var _d=$(html).attr(QWPAGINATOR_DOM_ROLE_NAME,type);
-				_d.attr(QWPAGINATOR_DOM_DATA_NAME,pageData);
+				var _d=$(html)
+				if (type != "pageinfo") {
+					_d.attr(QWPAGINATOR_DOM_ROLE_NAME,type);
+					_d.attr(QWPAGINATOR_DOM_DATA_NAME,pageData);
+				}
 				return this.getOutHTML(_d);
 			},
 			setStatus:function(){
@@ -130,7 +135,7 @@
 					}
 					var pageIndex = +$el.attr(QWPAGINATOR_DOM_DATA_NAME);
 					//if (pageIndex > opts.totalPages) { throw new Error("The pageIndex cannot be greater than "+opts.totalPages+";"); }
-					if (self.triggerEvent(pageIndex, 'go')) {
+					if (self.triggerEvent(pageIndex, 'change')) {
 						self.goPage(pageIndex);
 					}
 				});
@@ -295,9 +300,9 @@
         page: '<li><a href="javascript:;">{{page}}</a></li>',
         pageinfo:'',
 		showInputPage:false,
-        totalPages: 0,
+        totalPages: 1,
         totalCounts: 0,
-        pageSize: 0,
+        pageSize: 10,
         currentPage: 1,
         visiblePages: 7,
         disableClass: 'disabled',

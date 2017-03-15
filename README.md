@@ -41,9 +41,9 @@ $("#box").QWPaginator({
 | next| 下一页 |  | - | 不使用请用空字符 |
 | last| 末页 |  | - | 不使用请用空字符 |
 | page| 每页模板 |  | - | 不使用请用空字符 |
-| pageSize| 每页条数 |  | - | - |
-| totalPages| 总页数 |  | - | - |
-| totalCounts| 总条数 |  | - | - |
+| pageSize| 每页条数 | 10 | - | - |
+| totalPages| 总页数 | 1 | - | - |
+| totalCounts| 总条数 | 0 | - | - |
 | currentPage| 当前页 | 1 | - | - |
 | visiblePages| 可见页数量 | 7 | - | - |
 | disableClass| 禁用样式 | disabled | - | - |
@@ -51,7 +51,7 @@ $("#box").QWPaginator({
 | pageinfo| 页信息 |  | - |  | 
 | showInputPage| 是否显示页跳转 | true | - | 为false适用于下拉加载 |
 | external| 外部参数 |  | - | 组件本身不使用此参数 |
-| onPageChange| 页跳转回调 |  | function (p, t) {} | 回调参数中t值init表示初始,go表示变换 |
+| onPageChange| 页跳转回调 |  | function (p, t) {} | 回调参数中t值init表示初始,change表示变换 |
 
 # Method
 * **option**
