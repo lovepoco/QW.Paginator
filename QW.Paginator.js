@@ -25,9 +25,7 @@
         self.options = options;
 
         self.init = function (opt) {
-            self.verify();
-            self.render.draw();
-            self.triggerEvent(this.options.currentPage, 'init');
+            self.loadData('init');
         };
 
         self.verify = function () {
@@ -65,6 +63,58 @@
                 throw new Error('[QWPaginator] totalPages cannot be less currentPage');
             }
             //if (opts.currentPage > opts.totalPages) { throw new Error('[QWPaginator] currentPage is incorrect'); }
+        };
+		
+        self.loadData = function (eventtype) {
+            var opts = self.options;
+            self.loading.show();
+            if (typeof opts.onBeforeLoadData == 'function') {
+                opts.onBeforeLoadData(self.options);
+            }
+            if (opts.url && opts.url.length > 0) {
+                opts.data = null;
+                self.loading.show();
+				var urlDefault={};
+				urlDefault[opts.urlPageName]=opts.currentPage;
+				urlDefault[opts.urlPageSizeName]=opts.pageSize;
+                opts.urlParameter = $.extend(true, opts.urlParameter,urlDefault);
+                $.ajax({
+                    type: opts.urlMethod,
+                    url: opts.url,
+                    data: opts.urlParameter,
+                    dataType: "json",
+                    success: function (data) {
+                        self.loading.hide();
+						opts.data = data;
+						opts.totalCounts=0;
+						if(opts.data){
+							opts.totalCounts=opts.getDataLength(opts.data);
+						}
+						self.options=opts;
+						if (typeof opts.onLoadDataed == 'function') {
+							opts.onLoadDataed(opts);
+						}
+						self.verify();
+						self.triggerEvent(self.options.currentPage, eventtype);
+            			self.render.draw();
+                    },
+                    error: function () {
+                        self.loading.hide();
+						throw new Error('[QWPaginator] loadData Error!');
+                    }
+                });
+            } else {
+				if (typeof opts.onLoadDataed == 'function') {
+					opts.onLoadDataed(self.options);
+				}
+				if(opts.data){
+					opts.totalCounts=opts.getDataLength(opts.data);
+				}
+				self.verify();
+				self.triggerEvent(self.options.currentPage, eventtype);
+                self.loading.hide();
+            	self.render.draw();
+            }
         };
 		
         self.render = {
@@ -135,9 +185,7 @@
 					}
 					var pageIndex = +$el.attr(QWPAGINATOR_DOM_DATA_NAME);
 					//if (pageIndex > opts.totalPages) { throw new Error("The pageIndex cannot be greater than "+opts.totalPages+";"); }
-					if (self.triggerEvent(pageIndex, 'change')) {
-						self.goPage(pageIndex);
-					}
+					self.goPage(pageIndex);
 				});
 				
 				self.container.on('click', '.qw_btn_go', function () {
@@ -149,9 +197,7 @@
 						return;
 					}
 					var pageIndex = +txtval;
-					if (self.triggerEvent(pageIndex, 'go')) {
-						self.goPage(pageIndex);
-					}
+					self.goPage(pageIndex);
 				});
 				
 				self.container.on('keypress', ".qw_txt_go", function (event) {
@@ -169,9 +215,16 @@
 				return $("<p>").append(d.eq(0).clone()).html();
 			},
 			draw:function(){
+				var opts = self.options;
+				if (typeof opts.onBeforeDraw == 'function') {
+					opts.onBeforeDraw(self.container);
+				}
 				this.buildHtml();
 				this.setStatus();
 				this.bindEvents();
+				if (typeof opts.onDrawed == 'function') {
+					opts.onDrawed(self.container);
+				}
 			}
         };
 
@@ -245,6 +298,7 @@
 
         self.goPage = function (pageIndex) {
             self.options.currentPage = pageIndex;
+            self.loadData('change');
             self.render.draw();
         };
 
@@ -256,7 +310,7 @@
             option: function (options) {
                 self.options = $.extend({}, self.options, options);
                 self.verify();
-                self.render.draw();
+                //self.render.draw();
                 return self.options;
             },
             destroy: function () {
@@ -293,10 +347,10 @@
     };
 
     $.QWPaginator.defaultOptions = {
-        first: '<li class="page-first"><a href="javascript:;">First</a></li>',
+        first: '<li class="page-first"><a href="javascript:;">&larr;</a></li>',
         prev: '<li class="page-prev"><a href="javascript:;">&laquo;</a></li>',
         next: '<li class="page-next"><a href="javascript:;">&raquo;</a></li>',
-        last: '<li class="page-last"><a href="javascript:;">Last</a></li>',
+        last: '<li class="page-last"><a href="javascript:;">&rarr;</a></li>',
         page: '<li><a href="javascript:;">{{page}}</a></li>',
         pageinfo:'',
 		showInputPage:false,
@@ -307,8 +361,25 @@
         visiblePages: 7,
         disableClass: 'disabled',
         activeClass: 'page-cur',
+        onPageChange: null,
+        data: null,  
+        url: null,
+        urlParameter: null,
+        urlMethod: "get",
+        urlPageName:"page",
+        urlPageSizeName:"pagesize",
+		getDataLength:function(d){
+			var result=0;
+			if(d && d.length){
+				result=d.length;
+			}
+			return result;
+		},
+        onBeforeLoadData:null,
+        onLoadDataed:null,
+        onBeforeDraw: null,
+        onDrawed: null,
         external: null,
-        onPageChange: null
     };
 
     $.fn.QWPaginator = function () {

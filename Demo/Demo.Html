@@ -25,6 +25,8 @@
 				<div style="height:20px;"></div>
                 <button type="button" id="bt-opera1" class="btn btn-warning btn-block">跳第三页</button>
                 <button type="button" id="bt-opera2" class="btn btn-warning btn-block">刷新(每页15条)</button>
+                <button type="button" id="bt-opera3" class="btn btn-warning btn-block">打开加载</button>
+                <button type="button" id="bt-opera4" class="btn btn-warning btn-block">关闭加载</button>
             </div>
             <div class="col-md-5">
                 <ul class="pagination" id="showpager2"></ul>
@@ -57,11 +59,6 @@
         totalCounts: 500,
         pageSize: 10,
         currentPage: 1,
-        first: '<li><a href="javascript:;" class="page-first">First</a></li>',
-        prev: '<li><a href="javascript:;" class="page-prev">&laquo;</a></li>',
-        next: '<li><a href="javascript:;" class="page-next">&raquo;</a></li>',
-        page: '<li><a href="javascript:;">{{page}}</a></li>',
-        last: '<li><a href="javascript:;" class="page-last">Last</a></li>',
         visiblePages: 6,
 		showInputPage:false,
         disableClass: 'disabled',
@@ -83,5 +80,11 @@
 	
 	$("#bt-opera2").on("click",function(){
 		showpage.QWPaginator("redraw",{ pageSize: 15 });
+	});
+	$("#bt-opera3").on("click",function(){
+		showpage.QWPaginator("loading",false);
+	});
+	$("#bt-opera4").on("click",function(){
+		showpage.QWPaginator("loaded");
 	});
 </script>

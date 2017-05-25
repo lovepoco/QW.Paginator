@@ -50,7 +50,18 @@ $("#box").QWPaginator({
 | activeClass| 活动样式 | page-cur | - | - |
 | pageinfo| 页信息 |  | - |  | 
 | showInputPage| 是否显示页跳转 | true | - | 为false适用于下拉加载 |
+| url| url地址 | null | - | 返回值为json |
+| urlParameter| url参数 | null | - | - |
+| urlMethod| 请求方式 | "get" | - | - |
+| urlDataType| 获取数据方式 | "json" | - | - |
+| urlPageName| 页参数名称 | "page" | - | - |
+| urlPageSizeName| 页记录数参数名称 | "pagesize" | - | - |
 | external| 外部参数 |  | - | 组件本身不使用此参数 |
+| getDataLength| 获取数据长度 | function (d) {return d.length;} | - | 回调参数为静态数据data |
+| onBeforeLoadData| 数据加载前 | null | function (o) {} | 回调参数为实例的options |
+| onLoadDataed| 数据加载后 | null | function (o) {} | 回调参数为实例的options |
+| onBeforeDraw| 界面绘制前事件 | null | function (t) {} | 回调参数为实例容器 |
+| onDrawed| 界面绘制后事件 | null | function (t) {}  | 回调参数为实例容器 |
 | onPageChange| 页跳转回调 |  | function (p, t) {} | 回调参数中t值init表示初始,change表示变换 |
 
 # Method
