@@ -36,11 +36,11 @@ $("#box").QWPaginator({
 # Parameter
 | 名称 | 说明  | 默认值  | 示例  | 提示 |
 | ------------ | ------------ | ------------ | ------------ | ------------ |
-| first| 第一页 |  | - | 不使用请用空字符 |
-| prev| 上一页 |  | - | 不使用请用空字符 |
-| next| 下一页 |  | - | 不使用请用空字符 |
-| last| 末页 |  | - | 不使用请用空字符 |
-| page| 每页模板 |  | - | 不使用请用空字符 |
+| first| 第一页 |  | - | 不使用请用空字符  {{page}}对应页码|
+| prev| 上一页 |  | - | 不使用请用空字符  {{page}}对应页码|
+| next| 下一页 |  | - | 不使用请用空字符  {{page}}对应页码|
+| last| 末页 |  | - | 不使用请用空字符  {{page}}对应页码|
+| page| 每页模板 |  | - | 不使用请用空字符 {{page}}对应页码|
 | pageSize| 每页条数 | 10 | - | - |
 | totalPages| 总页数 | 1 | - | - |
 | totalCounts| 总条数 | 0 | - | - |
@@ -48,7 +48,7 @@ $("#box").QWPaginator({
 | visiblePages| 可见页数量 | 7 | - | - |
 | disableClass| 禁用样式 | disabled | - | - |
 | activeClass| 活动样式 | page-cur | - | - |
-| pageinfo| 页信息 |  | - |  | 
+| pageinfo| 页信息 |  | - | 模板字符说明： {{page}}当前页码 {{totalPages}}总页数 {{totalCounts}} 总计录数| 
 | showInputPage| 是否显示页跳转 | true | - | 为false适用于下拉加载 |
 | url| url地址 | null | - | 返回值为json |
 | urlParameter| url参数 | null | - | - |
