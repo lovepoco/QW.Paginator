@@ -130,7 +130,7 @@
 				self.isEnable('next') && html.push(this.buildItem('next', self.options.currentPage + 1));
 				self.isEnable('last') && html.push(this.buildItem('last', self.options.totalPages));
 				self.isEnable('pageinfo') && html.push(this.buildItem('pageinfo', self.options.currentPage));
-				if(self.options["showInputPage"]){
+                if (self.options["showInputPage"] && options.totalPages>1){
 					html.push('<input type="text" class="qw_txt_go" value="'+self.options.currentPage+'">');
 					html.push('<input type="button" class="qw_btn_go" value="GO">');
 				}
