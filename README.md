@@ -3,6 +3,7 @@
 * [戴子意 DZY](http://www.daiziyi.com/)
 * Note:参考了网上的分页组件但不记得原作者，在此表示感谢，下次找到再加上对方的版权说明
 * 感谢我的妻子前前，还有调皮的儿子琮琮和璋璋
+* 代码迁移到：https://gitee.com/u5web/QW.Paginator
 
 # Usage
 * **writing**
